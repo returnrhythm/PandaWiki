@@ -1,7 +1,7 @@
 import { MenuItem, Select, Stack, Typography } from '@mui/material';
 import { Icon } from 'ct-mui';
 import { Dispatch, SetStateAction } from 'react';
-import { Component } from '../index';
+import { Component } from '../../index';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { setAppPreviewData } from '@/store/slices/config';
 interface ComponentBarProps {

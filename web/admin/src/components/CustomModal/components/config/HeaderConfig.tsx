@@ -1,5 +1,5 @@
 import { AppDetail, HeaderSetting } from '@/api';
-import DragBtn from './DragBtn';
+import DragBtn from '../basicComponents/DragBtn';
 import UploadFile from '@/components/UploadFile';
 import { Stack, Box, TextField } from '@mui/material';
 import { Icon } from 'ct-mui';
@@ -9,10 +9,8 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { setAppPreviewData } from '@/store/slices/config';
 
 interface CardWebHeaderProps {
-  id?: string;
   data?: AppDetail | null;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
-  refresh: (value: HeaderSetting) => void;
 }
 
 const HeaderConfig = ({ data, setIsEdit }: CardWebHeaderProps) => {

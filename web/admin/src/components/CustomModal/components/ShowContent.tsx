@@ -4,7 +4,8 @@ import { ThemeProvider } from 'ct-mui';
 
 import { Dispatch, SetStateAction, useMemo, useState, useEffect } from 'react';
 import { AppSetting } from '@/api';
-import Header from './Header';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import componentStyleOverrides from '@/themes/override';
 import light from '../theme/light';
 import dark from '../theme/dark';
@@ -74,7 +75,9 @@ const ShowContent = ({
             sx={{
               position: 'absolute',
               left: '-2px',
-              bottom: '-24px',
+              ...(curComponent.name === 'footer'
+                ? { top: '-24px' }
+                : { bottom: '-24px' }),
               fontWeight: 400,
               lineHeight: '22px',
               bgcolor: '#5F58FE',
@@ -112,11 +115,7 @@ const ShowContent = ({
           borderLeft: '1px solid #ECEEF1',
           borderTop: '1px solid #ECEEF1',
           '&::-webkit-scrollbar': {
-            height: '8px', // 滚动条高度
-          },
-          '&::-webkit-scrollbar-thumb': {
-            background: '#888', // 滑块颜色
-            borderRadius: '4px',
+            height: '6px', // 滚动条高度
           },
         }}
       >
@@ -127,6 +126,7 @@ const ShowContent = ({
             margin: '0 auto',
             boxShadow:
               renderMode === 'pc' ? null : '0 10px 15px -3px rgb(0 0 0 / 0.1)',
+            minHeight: '800px',
             height: '100%',
             overflowX: renderMode === 'pc' ? 'auto' : 'hidden',
             overflowY: 'auto',
@@ -141,6 +141,12 @@ const ShowContent = ({
           {renderHighlightedComponent(
             'header',
             <Header settings={settings} renderMode={renderMode} />,
+          )}
+          <Box sx={{ flex: 1 }} /> {/* 添加一个弹性空间 */}
+          {/* Footer预览部分 */}
+          {renderHighlightedComponent(
+            'footer',
+            <Footer settings={settings} renderMode={renderMode} />,
           )}
         </Stack>
       </Stack>

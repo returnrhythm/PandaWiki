@@ -8,10 +8,11 @@ import {
 import { AppDetail, getAppDetail, updateAppDetail } from '@/api';
 import { useAppSelector, useAppDispatch } from '@/store';
 import { setAppPreviewData } from '@/store/slices/config';
-import ComponentBar from './components/ComponentBar';
-import ConfigBar from './components/ConfigBar';
+import ComponentBar from './components/components/ComponentBar';
+import ConfigBar from './components/config/ConfigBar';
 import ShowContent from './components/ShowContent';
-import HeaderConfig from './components/HeaderConfig';
+import HeaderConfig from './components/config/HeaderConfig';
+import FooterConfig from './components/config/FooterConfig';
 
 interface CustomModalProps {
   open: boolean;
@@ -31,24 +32,28 @@ const CustomModal = ({ open, onCancel }: CustomModalProps) => {
   const [kb, setKb] = useState<DomainKnowledgeBaseDetail | null>(null);
   const [info, setInfo] = useState<AppDetail | null>(null);
   const [renderMode, setRenderMode] = useState<'pc' | 'mobile'>('pc');
+
+  const [curComponent, setCurComponent] = useState<string>('header');
+  const [isEdit, setIsEdit] = useState(false);
+  const [scale, setScale] = useState(1);
   const [components, setComponents] = useState<Component[]>([
     {
       name: 'header',
       title: '顶部导航',
       component: HeaderConfig,
       props: {
-        id: info?.id,
         data: info,
       },
     },
-    // {
-    //   name: '1',
-    //   component: () => null,
-    // },
+    {
+      name: 'footer',
+      title: '底部导航',
+      component: FooterConfig,
+      props: {
+        data: info,
+      },
+    },
   ]);
-  const [curComponent, setCurComponent] = useState<string>('header');
-  const [isEdit, setIsEdit] = useState(false);
-  const [scale, setScale] = useState(1);
   const appPreviewData = useAppSelector(state => state.config.appPreviewData);
 
   const refresh = (value: AppDetail) => {
@@ -102,15 +107,17 @@ const CustomModal = ({ open, onCancel }: CustomModalProps) => {
         component: HeaderConfig,
         title: '顶部导航',
         props: {
-          id: info.id,
           data: info,
-          setIsEdit,
         },
       },
-      // {
-      //   name: 'footer',
-      //   component: () => null,
-      // },
+      {
+        name: 'footer',
+        title: '底部导航',
+        component: FooterConfig,
+        props: {
+          data: info,
+        },
+      },
     ]);
   }, [info]);
 

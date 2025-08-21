@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
-import { Component } from '../index';
+import { Component } from '../../index';
 
 interface ConfigBarProps {
   curComponent: string;
