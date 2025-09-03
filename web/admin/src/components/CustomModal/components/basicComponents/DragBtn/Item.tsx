@@ -206,6 +206,11 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
                   </Stack>
                   <TextField
                     label='请输入按钮文本'
+                    slotProps={{
+                      inputLabel: {
+                        shrink: true,
+                      },
+                    }}
                     sx={{
                       width: '236px',
                       height: '36px',
@@ -235,6 +240,11 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
                   />
                   <TextField
                     label='请输入按钮链接'
+                    slotProps={{
+                      inputLabel: {
+                        shrink: true,
+                      },
+                    }}
                     sx={{
                       width: '236px',
                       height: '36px',

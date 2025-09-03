@@ -2,6 +2,7 @@ import { AppDetail, HeaderSetting } from '@/api';
 import DragBtn from '../basicComponents/DragBtn';
 import UploadFile from '@/components/UploadFile';
 import { Stack, Box, TextField } from '@mui/material';
+import DragBrand from '../basicComponents/DragBrand';
 import { Icon } from 'ct-mui';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -29,7 +30,6 @@ const FooterConfig = ({ data, setIsEdit }: FooterConfigProps) => {
       brand_name: '',
       brand_desc: '',
       brand_logo: '',
-      brand_groups: [] as DomainBrandGroup[],
     },
   });
 
@@ -39,24 +39,6 @@ const FooterConfig = ({ data, setIsEdit }: FooterConfigProps) => {
   const brand_desc = watch('brand_desc');
   const brand_logo = watch('brand_logo');
   const brand_groups = watch('brand_groups');
-
-  //   const handleAddButton = () => {
-  //     const id = Date.now().toString();
-  //     const newBtn = {
-  //       id,
-  //       url: '',
-  //       variant: 'outlined' as const,
-  //       showIcon: true,
-  //       icon: '',
-  //       text: '按钮' + (btns.length + 1),
-  //       target: '_self' as const,
-  //     };
-
-  //     const currentBtns = appPreviewData?.settings.btns || [];
-  //     const newBtns = [...currentBtns, newBtn];
-  //     setValue('btns', newBtns);
-  //     setIsEdit(true);
-  //   };
 
   useEffect(() => {
     if (data?.settings) {
@@ -71,7 +53,6 @@ const FooterConfig = ({ data, setIsEdit }: FooterConfigProps) => {
       );
     }
   }, [data]);
-
   useEffect(() => {
     if (!appPreviewData) return;
     const previewData = {
@@ -90,6 +71,7 @@ const FooterConfig = ({ data, setIsEdit }: FooterConfigProps) => {
       },
     };
     dispatch(setAppPreviewData(previewData));
+    console.log(previewData);
   }, [corp_name, icp, brand_name, brand_desc, brand_logo, brand_groups]);
 
   return (
@@ -192,6 +174,64 @@ const FooterConfig = ({ data, setIsEdit }: FooterConfigProps) => {
               />
             </Stack>
           </Stack>
+        </Stack>
+        <Stack direction={'column'} gap={2}>
+          <Box
+            sx={{
+              fontSize: 14,
+              lineHeight: '22px',
+              flexShrink: 0,
+              display: 'flex',
+              alignItems: 'center',
+              fontWeight: 600,
+              '&::before': {
+                content: '""',
+                display: 'inline-block',
+                width: 4,
+                height: 12,
+                bgcolor: '#3248F2',
+                borderRadius: '2px',
+                mr: 1,
+              },
+            }}
+          >
+            链接组
+            <Stack
+              direction={'row'}
+              sx={{
+                alignItems: 'center',
+                marginLeft: 'auto',
+                cursor: 'pointer',
+              }}
+              onClick={() => {
+                const newGroups = [
+                  ...brand_groups,
+                  { name: '', links: [{ name: '', url: '' }] },
+                ];
+                setValue('brand_groups', newGroups);
+                setIsEdit(true);
+              }}
+            >
+              <Icon
+                type='icon-tianjia'
+                sx={{ fontSize: '10px !important', color: '#5F58FE' }}
+              />
+              <Box sx={{ fontSize: 14, lineHeight: '22px', marginLeft: 0.5 }}>
+                添加
+              </Box>
+            </Stack>
+          </Box>
+
+          <DragBrand
+            control={control}
+            data={brand_groups}
+            onChange={brand_groups => {
+              setValue('brand_groups', brand_groups);
+              setIsEdit(true);
+            }}
+            setIsEdit={setIsEdit}
+            errors={errors}
+          ></DragBrand>
         </Stack>
         <Stack direction={'column'} gap={2}>
           <Box

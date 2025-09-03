@@ -1,17 +1,6 @@
-import {
-  Box,
-  Button,
-  Stack,
-  TextField,
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
-import { useState } from 'react';
-import Logo from '@/assets/images/logo.png';
-import { Icon } from 'ct-mui';
+import { Box, Stack } from '@mui/material';
+import Logo from '@/assets/images/logo-dark.png';
 import { AppSetting } from '@/api';
-import NavBtns from '../basicComponents/NavBtns';
-import { getButtonThemeStyle } from '../basicComponents/buttonThemeUtils';
 
 interface FooterProps {
   settings: Partial<AppSetting>;
@@ -34,7 +23,7 @@ const Footer = ({ settings, renderMode }: FooterProps) => {
         position: 'sticky',
         bottom: 0,
         zIndex: 10,
-        paddingLeft: '18.75%',
+        paddingX: '18.75%',
         paddingTop: '60px',
         height: '494px',
         bgcolor: 'background.footer',
@@ -75,10 +64,48 @@ const Footer = ({ settings, renderMode }: FooterProps) => {
             {brand_desc}
           </Box>
         </Stack>
+        <Stack direction={'row'} justifyContent={'space-around'} width={'100%'}>
+          {brand_groups.length > 0 &&
+            brand_groups.map((group, index) => {
+              return (
+                <Stack direction={'column'} key={index}>
+                  <Box
+                    sx={{
+                      fontWeight: 600,
+                      fontSize: '14px',
+                      color: '#ffffff',
+                      lineHeight: '22px',
+                      marginBottom: '24px',
+                    }}
+                  >
+                    {group.name}
+                  </Box>
+                  <Stack gap={2}>
+                    {group.links.map((link, index) => {
+                      return (
+                        <Box
+                          key={index}
+                          gap={2}
+                          sx={{
+                            fontWeight: 300,
+                            fontSize: '12px',
+                            lineHeight: '20px',
+                            color: 'rgba(255,255,255,0.5)',
+                          }}
+                        >
+                          {link.name}
+                        </Box>
+                      );
+                    })}
+                  </Stack>
+                </Stack>
+              );
+            })}
+        </Stack>
       </Stack>
+
       <Stack
         sx={{
-          marginX: '18.75%',
           bgcolor: 'rgba(236, 238, 241, 0.10)',
           width: '100%',
           height: '1px',
@@ -88,9 +115,62 @@ const Footer = ({ settings, renderMode }: FooterProps) => {
         direction={'row'}
         alignItems={'center'}
         justifyContent={'center'}
-        sx={{ margin: '0 auto' }}
+        sx={{ marginX: 'auto', marginTop: '23px' }}
       >
-        <Stack sx={{}}></Stack>
+        {corp_name && (
+          <Stack
+            sx={{
+              fontSize: '12px',
+              lineHeight: '24px',
+              color: 'rgba(255, 255, 255, 0.30)',
+            }}
+          >
+            © 2025 {corp_name} 版权所有
+          </Stack>
+        )}
+        <Stack
+          sx={{
+            height: '10px',
+            width: '1px',
+            bgcolor: 'rgba(255, 255, 255, 0.10)',
+            mx: '12px',
+          }}
+        ></Stack>
+        {icp && (
+          <Stack
+            sx={{
+              fontSize: '12px',
+              lineHeight: '24px',
+              color: 'rgba(255, 255, 255, 0.30)',
+            }}
+          >
+            {icp}
+          </Stack>
+        )}
+        <Stack
+          sx={{
+            height: '10px',
+            width: '1px',
+            bgcolor: 'rgba(255, 255, 255, 0.10)',
+            mx: '12px',
+          }}
+        ></Stack>
+        <Stack
+          direction={'row'}
+          alignItems={'center'}
+          sx={{
+            fontSize: '12px',
+            lineHeight: '24px',
+            color: '#FFFFFF',
+          }}
+          // onClick={() => {
+          //   window.open('https://pandawiki.docs.baizhi.cloud/');
+          // }}
+          gap={0.5}
+        >
+          <img src={Logo} alt='PandaWiki' width={16} height={16} />
+          本网站由 PandaWiki 提供技术支持
+        </Stack>
       </Stack>
     </Stack>
   );

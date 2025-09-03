@@ -37,25 +37,25 @@ const DragBtn: FC<DragBtnProps> = ({ data, onChange, setIsEdit }) => {
     (event: DragEndEvent) => {
       const { active, over } = event;
       if (active.id !== over?.id) {
-        const oldIndex = data.findIndex((item) => item.id === active.id);
-        const newIndex = data.findIndex((item) => item.id === over!.id);
+        const oldIndex = data.findIndex(item => item.id === active.id);
+        const newIndex = data.findIndex(item => item.id === over!.id);
         const newData = arrayMove(data, oldIndex, newIndex);
         onChange(newData);
       }
 
       setActiveId(null);
     },
-    [data, onChange]
+    [data, onChange],
   );
   const handleDragCancel = useCallback(() => {
     setActiveId(null);
   }, []);
   const handleRemove = useCallback(
     (id: string) => {
-      const newData = data.filter((item) => item.id !== id);
+      const newData = data.filter(item => item.id !== id);
       onChange(newData);
     },
-    [data, onChange]
+    [data, onChange],
   );
 
   if (data.length === 0) return null;
@@ -69,7 +69,7 @@ const DragBtn: FC<DragBtnProps> = ({ data, onChange, setIsEdit }) => {
       onDragCancel={handleDragCancel}
     >
       <SortableContext
-        items={data.map((item) => item.id)}
+        items={data.map(item => item.id)}
         strategy={rectSortingStrategy}
       >
         <Stack direction={'row'} flexWrap={'wrap'} gap={2}>
@@ -89,7 +89,7 @@ const DragBtn: FC<DragBtnProps> = ({ data, onChange, setIsEdit }) => {
         {activeId ? (
           <Item
             isDragging
-            item={data.find((item) => item.id === activeId)!}
+            item={data.find(item => item.id === activeId)!}
             setIsEdit={setIsEdit}
             data={data}
           />
